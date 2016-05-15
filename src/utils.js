@@ -44,7 +44,7 @@ export function waitForReceipt(txhash, web3Provider) {
   return promise;
 }
 
-export function waitForContract(Contract, txhash, web3Provider) {
+export function waitForContract(txhash, web3Provider) {
   const getCode = Promise.promisify(new Web3(web3Provider).eth.getCode);
   return waitForReceipt(txhash, web3Provider)
     .then((receipt) => {
@@ -60,5 +60,5 @@ export function waitForContract(Contract, txhash, web3Provider) {
           throw new Error('Contract code was not stored, probably because it ran out of gas.');
         });
     })
-    .then(receipt => Contract.at(receipt.contractAddress));
+    .then(receipt => receipt.contractAddress);
 }
