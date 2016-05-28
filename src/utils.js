@@ -44,6 +44,11 @@ export function waitForReceipt(txhash, web3Provider) {
   return promise;
 }
 
+/**
+ * Create a promise that resolves to the address of the deployed contract if
+ * deployed successfully.
+ * @return {Promise<Address>}
+ */
 export function waitForContract(txhash, web3Provider) {
   const getCode = Promise.promisify(new Web3(web3Provider).eth.getCode);
   return waitForReceipt(txhash, web3Provider)
