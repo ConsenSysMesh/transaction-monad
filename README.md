@@ -34,6 +34,25 @@ minedTx.transact(httpProvider)
   .then((receipt) => {
     ...
   })
+
+// Protocol Libraries
+// ==================
+
+function transferTokens(sender, to, amount) {
+  const web3 = new Web3();
+  const TokenContract = web3.eth.contract(Token.abi).at(Token.address);
+  const data = TokenContract.transfer.getData(to, amount);
+  const options = { data, from: sender, to: Pledges.address };
+  return Transaction({ options });
+}
+
+const tx = transferTokens(
+  '0xe8d3266f3c4f083ab8864b5e04aea7b087044e49',
+  '0x7967c4f4512195ba83ae8f08ca30f7b145be6cf8',
+  1000000
+);
+
+const txhash = await tx.transact(provider);
 ```
 
 Tests
