@@ -42,7 +42,7 @@ function transferTokens(sender, to, amount) {
   const web3 = new Web3();
   const TokenContract = web3.eth.contract(Token.abi).at(Token.address);
   const data = TokenContract.transfer.getData(to, amount);
-  const options = { data, from: sender, to: Pledges.address };
+  const options = { data, from: sender, to: Token.address };
   return Transaction({ options });
 }
 
