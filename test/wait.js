@@ -43,3 +43,46 @@ describe('waitForReceipt', () => {
     done();
   });
 });
+
+describe('waitForContract', () => {
+  it('waits for contract', async function (done) {
+    const getCode = sinon.stub();
+    getCode.returns('0x1');
+    const receipt = { contractAddress: '0x7967c4f4512195ba83ae8f08ca30f7b145be6cf8' };
+    const provider = testutils.stubbedProvider(testutils.receiptProviderStub(
+      receipt, { fallback: getCode }));
+    const sendAsync = sinon.spy(provider, 'sendAsync');
+
+    const result = await utils.waitForContract(
+      '0xe8d3266f3c4f083ab8864b5e04aea7b087044e49', provider);
+    expect(result).to.equal(receipt.contractAddress);
+
+    expect(sendAsync.called).to.be.true;
+    expect(getCode.calledOnce).to.be.true;
+
+    done();
+  });
+
+  it('fails if no code was found', async function (done) {
+    const getCode = sinon.stub();
+    getCode.returns('0x');
+    const receipt = { contractAddress: '0x7967c4f4512195ba83ae8f08ca30f7b145be6cf8' };
+    const provider = testutils.stubbedProvider(testutils.receiptProviderStub(
+      receipt, { fallback: getCode }));
+    const sendAsync = sinon.spy(provider, 'sendAsync');
+
+    let threw = false;
+    try {
+      await utils.waitForContract(
+        '0xe8d3266f3c4f083ab8864b5e04aea7b087044e49', provider);
+    } catch (error) {
+      threw = true;
+    }
+
+    expect(threw).to.be.true;
+    expect(sendAsync.called).to.be.true;
+    expect(getCode.calledOnce).to.be.true;
+
+    done();
+  });
+});
