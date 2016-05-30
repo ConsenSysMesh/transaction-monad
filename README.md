@@ -28,7 +28,7 @@ const tx = Transaction({
 });
 
 const minedTx = tx.map((txhash, provider) => waitForReceipt(txhash, provider));
-const gas = await minedTx.estimateGas(httpProvider);
+const gas = await minedTx.getQuickestGasEstimate(httpProvider);
 
 minedTx.transact(httpProvider)
   .then((receipt) => {
