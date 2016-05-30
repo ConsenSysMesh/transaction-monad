@@ -2,6 +2,7 @@
   "name": "transaction-monad",
   "version": "0.1.0",
   "description": "Compose computation that depends on an Ethereum transaction",
+  "license": "Apache-2.0",
   "main": "lib/index.js",
   "scripts": {
     "compile": "babel src -d lib",
