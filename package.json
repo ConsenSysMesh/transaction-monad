@@ -6,7 +6,8 @@
   "scripts": {
     "compile": "babel src -d lib",
     "prepublish": "npm run compile",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "test": "mocha --compilers js:babel-core/register --require babel-polyfill test/*.js"
   },
   "author": "Niran Babalola <niran.babalola@consensys.net>",
   "devDependencies": {
@@ -17,9 +18,12 @@
     "babel-preset-react": "^6.0.15",
     "babel-preset-stage-0": "^6.0.15",
     "bluebird": "^3.3.4",
+    "chai": "^3.5.0",
     "eslint": "^2.9.0",
     "eslint-config-airbnb": "^8.0.0",
-    "eslint-plugin-react": "^5.0.1"
+    "eslint-plugin-react": "^5.0.1",
+    "mocha": "^2.5.3",
+    "sinon": "^1.17.4"
   },
   "dependencies": {
     "bluebird": "^3.3.5",
