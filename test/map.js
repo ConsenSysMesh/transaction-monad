@@ -17,9 +17,10 @@ describe('Transaction.map', () => {
       },
     });
 
-    const { provider, resultStub } = utils.stubbedProvider();
-    const sendAsync = sinon.spy(provider, 'sendAsync');
+    const resultStub = sinon.stub();
     resultStub.returns(utils.STUB_TXHASH);
+    const provider = utils.stubbedProvider(resultStub);
+    const sendAsync = sinon.spy(provider, 'sendAsync');
     const MAP_RESULT = 'MAP RESULT';
 
     const mappedTx = tx.map((txhash, providerArg) => {
@@ -49,9 +50,10 @@ describe('Transaction.map', () => {
       },
     });
 
-    const { provider, resultStub } = utils.stubbedProvider();
-    const sendAsync = sinon.spy(provider, 'sendAsync');
+    const resultStub = sinon.stub();
     resultStub.returns(utils.STUB_TXHASH);
+    const provider = utils.stubbedProvider(resultStub);
+    const sendAsync = sinon.spy(provider, 'sendAsync');
     const MAP_RESULT_1 = 'MAP RESULT 1';
     const MAP_RESULT_2 = 'MAP RESULT 2';
 

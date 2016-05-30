@@ -17,9 +17,10 @@ describe('Transaction.transact', () => {
       },
     });
 
-    const { provider, resultStub } = utils.stubbedProvider();
-    const sendAsync = sinon.spy(provider, 'sendAsync');
+    const resultStub = sinon.stub();
     resultStub.returns(utils.STUB_TXHASH);
+    const provider = utils.stubbedProvider(resultStub);
+    const sendAsync = sinon.spy(provider, 'sendAsync');
 
     const txhash = await tx.transact(provider);
 
@@ -42,9 +43,10 @@ describe('Transaction.transact', () => {
       },
     });
 
-    const { provider, resultStub } = utils.stubbedProvider();
-    const sendAsync = sinon.spy(provider, 'sendAsync');
+    const resultStub = sinon.stub();
     resultStub.returns(utils.STUB_TXHASH);
+    const provider = utils.stubbedProvider(resultStub);
+    const sendAsync = sinon.spy(provider, 'sendAsync');
 
     const overrideDestination = '0x533e20fb3df2a62b3fd6c569e8a23701b84dee85';
     await tx.transact(provider, { to: overrideDestination });
@@ -70,7 +72,7 @@ describe('Transaction.transact', () => {
       handleTransact: () => handleTransact(),
     });
 
-    const { provider } = utils.stubbedProvider();
+    const provider = utils.stubbedProvider();
     const sendAsync = sinon.spy(provider, 'sendAsync');
 
     const overrideDestination = '0x533e20fb3df2a62b3fd6c569e8a23701b84dee85';

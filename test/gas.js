@@ -17,10 +17,11 @@ describe('Transaction.estimateGas', () => {
       },
     });
 
-    const { provider, resultStub } = utils.stubbedProvider();
-    const sendAsync = sinon.spy(provider, 'sendAsync');
     const GAS_ESTIMATE = 21000;
+    const resultStub = sinon.stub();
     resultStub.returns(GAS_ESTIMATE);
+    const provider = utils.stubbedProvider(resultStub);
+    const sendAsync = sinon.spy(provider, 'sendAsync');
 
     const result = await tx.estimateGas(provider);
     expect(result).to.be.equal(GAS_ESTIMATE);
@@ -42,10 +43,11 @@ describe('Transaction.estimateGas', () => {
       },
     });
 
-    const { provider, resultStub } = utils.stubbedProvider();
-    const sendAsync = sinon.spy(provider, 'sendAsync');
     const GAS_ESTIMATE = 21000;
+    const resultStub = sinon.stub();
     resultStub.returns(GAS_ESTIMATE);
+    const provider = utils.stubbedProvider(resultStub);
+    const sendAsync = sinon.spy(provider, 'sendAsync');
 
     const result = await tx.getQuickestGasEstimate(provider);
     expect(result).to.be.equal(GAS_ESTIMATE);
@@ -69,7 +71,7 @@ describe('Transaction.estimateGas', () => {
       expectedGas: GAS_ESTIMATE,
     });
 
-    const { provider } = utils.stubbedProvider();
+    const provider = utils.stubbedProvider();
     const sendAsync = sinon.spy(provider, 'sendAsync');
 
     const result = await tx.getQuickestGasEstimate(provider);
