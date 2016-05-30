@@ -1,7 +1,7 @@
 import Promise from 'bluebird';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import { utils } from '../src';
+import * as utils from '../src/utils';
 import * as testutils from './_utils';
 
 global.Promise = Promise;  // Use bluebird for better error logging during development.
