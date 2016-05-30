@@ -7,7 +7,7 @@ import * as utils from './utils';
 global.Promise = Promise;  // Use bluebird for better error logging during development.
 
 
-describe('transact', () => {
+describe('Transaction.transact', () => {
   it('uses the transaction options to send a transaction', async function (done) {
     const tx = Transaction({
       options: {
