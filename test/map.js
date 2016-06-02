@@ -8,7 +8,7 @@ global.Promise = Promise;  // Use bluebird for better error logging during devel
 
 
 describe('Transaction.map', () => {
-  it('calls the mapped function when transacting', async function (done) {
+  it('calls the mapped function when transacting', async function () {
     const tx = Transaction({
       options: {
         from: '0xe8d3266f3c4f083ab8864b5e04aea7b087044e49',
@@ -37,11 +37,9 @@ describe('Transaction.map', () => {
     const args = sendAsync.firstCall.args[0];
     expect(args.params[0]).to.deep.equal(tx.options);
     expect(args.method).to.equal('eth_sendTransaction');
-
-    done();
   });
 
-  it('chains calls', async function (done) {
+  it('chains calls', async function () {
     const tx = Transaction({
       options: {
         from: '0xe8d3266f3c4f083ab8864b5e04aea7b087044e49',
@@ -77,7 +75,5 @@ describe('Transaction.map', () => {
     const args = sendAsync.firstCall.args[0];
     expect(args.params[0]).to.deep.equal(tx.options);
     expect(args.method).to.equal('eth_sendTransaction');
-
-    done();
   });
 });

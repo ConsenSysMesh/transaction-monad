@@ -8,7 +8,7 @@ global.Promise = Promise;  // Use bluebird for better error logging during devel
 
 
 describe('Transaction.estimateGas', () => {
-  it('estimates gas from daemon', async function (done) {
+  it('estimates gas from daemon', async function () {
     const tx = Transaction({
       options: {
         from: '0xe8d3266f3c4f083ab8864b5e04aea7b087044e49',
@@ -30,11 +30,9 @@ describe('Transaction.estimateGas', () => {
     const args = sendAsync.firstCall.args[0];
     expect(args.params[0]).to.deep.equal(tx.options);
     expect(args.method).to.equal('eth_estimateGas');
-
-    done();
   });
 
-  it('quickest estimate uses daemon without expectedGas', async function (done) {
+  it('quickest estimate uses daemon without expectedGas', async function () {
     const tx = Transaction({
       options: {
         from: '0xe8d3266f3c4f083ab8864b5e04aea7b087044e49',
@@ -56,11 +54,9 @@ describe('Transaction.estimateGas', () => {
     const args = sendAsync.firstCall.args[0];
     expect(args.params[0]).to.deep.equal(tx.options);
     expect(args.method).to.equal('eth_estimateGas');
-
-    done();
   });
 
-  it('quickest estimate uses expectedGas', async function (done) {
+  it('quickest estimate uses expectedGas', async function () {
     const GAS_ESTIMATE = 21000;
     const tx = Transaction({
       options: {
@@ -77,6 +73,5 @@ describe('Transaction.estimateGas', () => {
     const result = await tx.getQuickestGasEstimate(provider);
     expect(result).to.be.equal(GAS_ESTIMATE);
     expect(sendAsync.called).to.be.false;
-    done();
   });
 });

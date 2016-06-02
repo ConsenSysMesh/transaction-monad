@@ -8,7 +8,7 @@ global.Promise = Promise;  // Use bluebird for better error logging during devel
 
 
 describe('waitForReceipt', () => {
-  it('gets receipt from provider', async function (done) {
+  it('gets receipt from provider', async function () {
     const receipt = { dummy: true };
     const provider = testutils.stubbedProvider(testutils.receiptProviderStub(receipt));
     const sendAsync = sinon.spy(provider, 'sendAsync');
@@ -21,11 +21,9 @@ describe('waitForReceipt', () => {
     // Ensure that the block filter was stopped.
     const args = sendAsync.lastCall.args[0];
     expect(args.method).to.equal('eth_uninstallFilter');
-
-    done();
   });
 
-  it("gets receipt when the transaction's block was already mined", async function (done) {
+  it("gets receipt when the transaction's block was already mined", async function () {
     const receipt = { dummy: true };
     const provider = testutils.stubbedProvider(
       testutils.receiptProviderStub(receipt, { neverNewBlocks: true }));
@@ -39,13 +37,11 @@ describe('waitForReceipt', () => {
     // Ensure that the block filter was stopped.
     const args = sendAsync.lastCall.args[0];
     expect(args.method).to.equal('eth_uninstallFilter');
-
-    done();
   });
 });
 
 describe('waitForContract', () => {
-  it('waits for contract', async function (done) {
+  it('waits for contract', async function () {
     const getCode = sinon.stub();
     getCode.returns('0x1');
     const receipt = { contractAddress: '0x7967c4f4512195ba83ae8f08ca30f7b145be6cf8' };
@@ -59,11 +55,9 @@ describe('waitForContract', () => {
 
     expect(sendAsync.called).to.be.true;
     expect(getCode.calledOnce).to.be.true;
-
-    done();
   });
 
-  it('fails if no code was found', async function (done) {
+  it('fails if no code was found', async function () {
     const getCode = sinon.stub();
     getCode.returns('0x');
     const receipt = { contractAddress: '0x7967c4f4512195ba83ae8f08ca30f7b145be6cf8' };
@@ -82,7 +76,5 @@ describe('waitForContract', () => {
     expect(threw).to.be.true;
     expect(sendAsync.called).to.be.true;
     expect(getCode.calledOnce).to.be.true;
-
-    done();
   });
 });

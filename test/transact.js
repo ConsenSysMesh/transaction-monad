@@ -8,7 +8,7 @@ global.Promise = Promise;  // Use bluebird for better error logging during devel
 
 
 describe('Transaction.transact', () => {
-  it('uses the transaction options to send a transaction', async function (done) {
+  it('uses the transaction options to send a transaction', async function () {
     const tx = Transaction({
       options: {
         from: '0xe8d3266f3c4f083ab8864b5e04aea7b087044e49',
@@ -30,11 +30,9 @@ describe('Transaction.transact', () => {
     const args = sendAsync.firstCall.args[0];
     expect(args.params[0]).to.deep.equal(tx.options);
     expect(args.method).to.equal('eth_sendTransaction');
-
-    done();
   });
 
-  it('overrides options', async function (done) {
+  it('overrides options', async function () {
     const tx = Transaction({
       options: {
         from: '0xe8d3266f3c4f083ab8864b5e04aea7b087044e49',
@@ -54,11 +52,9 @@ describe('Transaction.transact', () => {
     const args = sendAsync.firstCall.args[0];
     expect(args.params[0]).not.to.deep.equal(tx.options);
     expect(args.params[0].to).to.equal(overrideDestination);
-
-    done();
   });
 
-  it('uses handleTransact when provided', async function (done) {
+  it('uses handleTransact when provided', async function () {
     const CUSTOM_HANDLER = 'CUSTOM HANDLER';
     const handleTransact = sinon.stub();
     handleTransact.returns(Promise.resolve(CUSTOM_HANDLER));
@@ -81,7 +77,5 @@ describe('Transaction.transact', () => {
     expect(sendAsync.called).to.be.false;
     expect(handleTransact.called).to.be.true;
     expect(result).to.equal(CUSTOM_HANDLER);
-
-    done();
   });
 });
