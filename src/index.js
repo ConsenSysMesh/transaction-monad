@@ -61,6 +61,8 @@ Object.assign(Transaction.prototype, {
   },
 
   getQuickestGasEstimate(provider) {
+    // FIXME: expectedGas was probably unnecessary. this.options.gasLimit should
+    // do the trick.
     if (this.expectedGas != null) {
       return Promise.resolve(this.expectedGas);
     }
