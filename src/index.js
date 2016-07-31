@@ -25,14 +25,22 @@ Object.assign(Transaction.prototype, {
    * handleTransact was not provided, the transaction is sent and its hash is
    * returned in a Promise.
    */
-  transact(provider, overrides) {
+  async transact(provider, overrides = {}) {
     if (this.handleTransact != null) {
-      return this.handleTransact(provider, overrides);
+      return await this.handleTransact(provider, overrides);
+    }
+
+    // Metamask estimates gas for transactions that don't specify it, but
+    // geth defaults to 90,000 gas. For consistency, we'll estimate the gas
+    // ourselves, using expectedGas if provided to skip eth_estimateGas.
+    let gas = this.options.gas || overrides.gas;
+    if (gas == null) {
+      gas = await this.getQuickestGasEstimate(provider);
     }
 
     const web3 = new Web3(provider);
     const sendTransaction = Promise.promisify(web3.eth.sendTransaction);
-    return sendTransaction({ ...this.options, ...(overrides || {}) });
+    return await sendTransaction({ ...this.options, ...(overrides || {}), gas });
   },
 
   /**
